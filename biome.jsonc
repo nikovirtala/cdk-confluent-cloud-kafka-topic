@@ -29,6 +29,7 @@
       "!.vscode/settings.json",
       "!Brewfile",
       "!mise.toml",
+      "!src/confluent-topic-handler-function.ts",
       "!tsconfig.dev.json",
       "!vitest.config.ts"
     ]

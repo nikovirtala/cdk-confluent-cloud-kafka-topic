@@ -10,13 +10,20 @@
       "type": "build"
     },
     {
+      "name": "@types/aws-lambda",
+      "type": "build"
+    },
+    {
       "name": "@types/node",
-      "version": "^24",
       "type": "build"
     },
     {
       "name": "commit-and-tag-version",
       "version": "^12",
+      "type": "build"
+    },
+    {
+      "name": "esbuild",
       "type": "build"
     },
     {
@@ -59,6 +66,10 @@
       "name": "vitest",
       "version": "^4",
       "type": "build"
+    },
+    {
+      "name": "@aws-sdk/client-secrets-manager",
+      "type": "bundled"
     },
     {
       "name": "@vitest/coverage-v8",

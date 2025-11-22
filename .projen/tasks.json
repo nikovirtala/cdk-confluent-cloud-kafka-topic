@@ -52,6 +52,33 @@
       ],
       "condition": "git log --oneline -1 | grep -qv \"chore(release):\""
     },
+    "bundle": {
+      "name": "bundle",
+      "description": "Prepare assets",
+      "steps": [
+        {
+          "spawn": "bundle:confluent-topic-handler.lambda"
+        }
+      ]
+    },
+    "bundle:confluent-topic-handler.lambda": {
+      "name": "bundle:confluent-topic-handler.lambda",
+      "description": "Create a JavaScript bundle from src/confluent-topic-handler.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/confluent-topic-handler.lambda.ts --target=\"node22\" --platform=\"node\" --outfile=\"assets/confluent-topic-handler.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/*"
+        }
+      ]
+    },
+    "bundle:confluent-topic-handler.lambda:watch": {
+      "name": "bundle:confluent-topic-handler.lambda:watch",
+      "description": "Continuously update the JavaScript bundle from src/confluent-topic-handler.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/confluent-topic-handler.lambda.ts --target=\"node22\" --platform=\"node\" --outfile=\"assets/confluent-topic-handler.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/* --watch"
+        }
+      ]
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -132,6 +159,15 @@
       "steps": [
         {
           "spawn": "default"
+        }
+      ]
+    },
+    "generate:types": {
+      "name": "generate:types",
+      "description": "Generate TypeScript types from Confluent Cloud documentation",
+      "steps": [
+        {
+          "exec": "tsx scripts/generate-topic-config-types.ts"
         }
       ]
     },
@@ -227,7 +263,15 @@
     },
     "pre-compile": {
       "name": "pre-compile",
-      "description": "Prepare the project for compilation"
+      "description": "Prepare the project for compilation",
+      "steps": [
+        {
+          "spawn": "bundle"
+        },
+        {
+          "spawn": "generate:types"
+        }
+      ]
     },
     "release": {
       "name": "release",
@@ -309,13 +353,13 @@
       },
       "steps": [
         {
-          "exec": "pnpm dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@nikovirtala/projen-constructs,jsii-diff,jsii-pacmak,projen,tsx"
+          "exec": "pnpm dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@nikovirtala/projen-constructs,@types/aws-lambda,@types/node,esbuild,jsii-diff,jsii-pacmak,projen,tsx,@aws-sdk/client-secrets-manager"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
         },
         {
-          "exec": "pnpm update @biomejs/biome @nikovirtala/projen-constructs @types/node commit-and-tag-version jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii projen tsx typescript vitest @vitest/coverage-v8 aws-cdk-lib constructs"
+          "exec": "pnpm update @biomejs/biome @nikovirtala/projen-constructs @types/aws-lambda @types/node commit-and-tag-version esbuild jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii projen tsx typescript vitest @aws-sdk/client-secrets-manager @vitest/coverage-v8 aws-cdk-lib constructs"
         },
         {
           "exec": "npx projen"

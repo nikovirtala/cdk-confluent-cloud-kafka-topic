@@ -8,12 +8,16 @@
     "biome": "npx projen biome",
     "build": "npx projen build",
     "bump": "npx projen bump",
+    "bundle": "npx projen bundle",
+    "bundle:confluent-topic-handler.lambda": "npx projen bundle:confluent-topic-handler.lambda",
+    "bundle:confluent-topic-handler.lambda:watch": "npx projen bundle:confluent-topic-handler.lambda:watch",
     "clobber": "npx projen clobber",
     "compat": "npx projen compat",
     "compile": "npx projen compile",
     "default": "npx projen default",
     "docgen": "npx projen docgen",
     "eject": "npx projen eject",
+    "generate:types": "npx projen generate:types",
     "homebrew:bundle": "npx projen homebrew:bundle",
     "install:homebrew": "npx projen install:homebrew",
     "mise:trust": "npx projen mise:trust",
@@ -40,11 +44,13 @@
   "devDependencies": {
     "@biomejs/biome": "^2",
     "@nikovirtala/projen-constructs": "^0.2.13",
+    "@types/aws-lambda": "^8.10.159",
     "@types/node": "^24",
     "@vitest/coverage-v8": "^4",
     "aws-cdk-lib": "2.227.0",
     "commit-and-tag-version": "^12",
     "constructs": "10.4.3",
+    "esbuild": "^0.25.12",
     "jsii": "~5.9.0",
     "jsii-diff": "^1.119.0",
     "jsii-docgen": "^10.5.0",
@@ -59,6 +65,12 @@
     "aws-cdk-lib": "^2.227.0",
     "constructs": "^10.4.3"
   },
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.936.0"
+  },
+  "bundledDependencies": [
+    "@aws-sdk/client-secrets-manager"
+  ],
   "pnpm": {},
   "keywords": [
     "cdk"

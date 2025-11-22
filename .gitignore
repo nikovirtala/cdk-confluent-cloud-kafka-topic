@@ -48,10 +48,13 @@ jspm_packages/
 .jsii
 tsconfig.json
 !/API.md
+/assets/
+!/src/confluent-topic-handler-function.ts
 !/.vscode/extensions.json
 !/.vscode/settings.json
 !/Brewfile
 !/mise.toml
 /coverage/
 !/vitest.config.ts
+/docs/topic-config-reference.md
 !/.projenrc.ts
